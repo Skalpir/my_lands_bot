@@ -112,7 +112,8 @@ for dungeon in dungeons_list:
     go_to_map(dungeon)
     go_to_cell_and_attack(dungeon)
     timetime = time.time()
-    sleep_time = (timetime + dungeon.attack_time * 2 + 100) - timetime
+    sleep_time = (timetime + int(dungeon.attack_time) * 2 + 100) - timetime
+    print(sleep_time)
     time.sleep(sleep_time)
     move_and_click_x_y(x=1750,y=500)
     print(f"Attack sent to dungeon at ({dungeon.X}, {dungeon.Y})")
