@@ -80,8 +80,8 @@ def go_to_cell_and_attack(dungeon):
         X_cell_pos = cells.get(9)
     else:
         X_cell_pos = cells.get(X_cell_pos)
-    print(X_cell_pos)
-    print(Y)
+    # print(X_cell_pos) #check pos
+    # print(Y) #check pos
     move_and_click_x_y(X_cell_pos,Y) # go to cell with dungeon
     move_and_click_x_y(X_cell_pos, Y-40) # go to attack button
     move_and_click(select_all_units_button) # select all unit and prepare to attack
@@ -112,8 +112,10 @@ for dungeon in dungeons_list:
     go_to_map(dungeon)
     go_to_cell_and_attack(dungeon)
     timetime = time.time()
+    actual_time = time.localtime()
+    print(f"start attacking at ( {dungeon.X} ,{dungeon.Y} , {dungeon.cell} ) on ({actual_time.tm_hour}:{actual_time.tm_min})")
     sleep_time = (timetime + int(dungeon.attack_time) * 2 + 100) - timetime
-    print(sleep_time)
+    print(f"waiting time to next dungeon in seconds - {sleep_time}, its equal {sleep_time / 60} minutes")
     time.sleep(sleep_time)
     move_and_click_x_y(x=1750,y=500)
-    print(f"Attack sent to dungeon at ({dungeon.X}, {dungeon.Y})")
+    # print(f"Attack sent to dungeon at ({dungeon.X}, {dungeon.Y})")
