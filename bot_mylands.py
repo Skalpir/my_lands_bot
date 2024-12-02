@@ -100,22 +100,49 @@ while True:
         break
     Y = input("Enter Y coordinate: ")
     cell = int(input("Enter cell number: "))
-    attack_time = input("Enter attack time in seconds: ")
+    attack_time = input("Enter attack hh:mm:ss ")
+
+
     
     dungeon = Dungeon(int(X), int(Y), cell, attack_time)
     dungeons_list.append(dungeon)
+    print("dungeon-list:")
+    for dungeon in dungeons_list:
+        print (f"dungeon at X Y: {dungeon.X}:{dungeon.Y}, Cell: {dungeon.cell}, attack_time {dungeon.attack_time}" ) 
 
+log_file = open("attack_log.txt", "a", encoding="utf-8")
+log_file.write("Dungeon list \n")
+for dungeon in dungeons_list:
+    log_file.write(f"dungeon at X Y: {dungeon.X}:{dungeon.Y}, Cell: {dungeon.cell}, attack_time {dungeon.attack_time} \n"  ) 
 print("Starting attacks in 10 seconds...")
 time.sleep(10)
+log_file.close()
 
 for dungeon in dungeons_list:
-    go_to_map(dungeon)
-    go_to_cell_and_attack(dungeon)
+    log_file = open("attack_log.txt", "a", encoding="utf-8")
     timetime = time.time()
     actual_time = time.localtime()
-    print(f"start attacking at ( {dungeon.X} ,{dungeon.Y} , {dungeon.cell} ) on ({actual_time.tm_hour}:{actual_time.tm_min})")
-    sleep_time = (timetime + int(dungeon.attack_time) * 2 + 100) - timetime
+    
+    go_to_map(dungeon)
+    go_to_cell_and_attack(dungeon)
+#log
+    log_file.write(f"Attack started at: {time.strftime('%Y-%m-%d %H:%M:%S', actual_time)} on Dungeon (X:{dungeon.X}, Y:{dungeon.Y}, Cell:{dungeon.cell})\n")
+    print(f"start attacking at X:Y( {dungeon.X}:{dungeon.Y} Cell:{dungeon.cell} ) on (h:{actual_time.tm_hour}:m:{actual_time.tm_min})")
+#end log
+
+#calcute time in seconds
+    hours, minutes, seconds = map(int, dungeon.attack_time.split(':'))
+    total_seconds = hours * 3600 + minutes * 60 + seconds
+    sleep_time = (timetime + int(total_seconds) * 2 + 100) - timetime
+
+    log_file.write(f"Waiting {sleep_time/60} minutes until next action.\n")
+    log_file.close()
     print(f"waiting time to next dungeon in seconds - {sleep_time}, its equal {sleep_time / 60} minutes")
-    time.sleep(sleep_time)
+
+    next_action_timer = time.time() + sleep_time
+    while time.time() > sleep_time:
+        current_time= time.time()
+        print(f"time left to next action: {(next_action_timer-current_time)/60} minutes")
+        time.sleep(60)
     move_and_click_x_y(x=1750,y=500)
     # print(f"Attack sent to dungeon at ({dungeon.X}, {dungeon.Y})")

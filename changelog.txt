@@ -1,0 +1,6 @@
+02.12.2024
+added hh:mm:ss input
+added a logging in a .txt file
+added a timer "left to action time"
+added print dungeon_list at console
+some cosmetic changes at console
