@@ -140,7 +140,7 @@ for dungeon in dungeons_list:
     print(f"waiting time to next dungeon in seconds - {sleep_time}, its equal {sleep_time / 60} minutes")
 
     next_action_timer = time.time() + sleep_time
-    while time.time() > sleep_time:
+    while time.time() < next_action_timer:
         current_time= time.time()
         print(f"time left to next action: {(next_action_timer-current_time)/60} minutes")
         time.sleep(60)
