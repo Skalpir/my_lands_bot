@@ -142,7 +142,7 @@ for dungeon in dungeons_list:
     next_action_timer = time.time() + sleep_time
     while time.time() < next_action_timer:
         current_time= time.time()
-        print(f"time left to next action: {(next_action_timer-current_time)/60} minutes")
+        print(f"time left to next action: {(next_action_timer-current_time)/60} minutes") #add accuracity .2 charters after ,
         time.sleep(60)
     move_and_click_x_y(x=1750,y=500)
     # print(f"Attack sent to dungeon at ({dungeon.X}, {dungeon.Y})")
